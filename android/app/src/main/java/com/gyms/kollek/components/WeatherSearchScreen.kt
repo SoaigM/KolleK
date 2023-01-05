@@ -2,24 +2,35 @@ package com.gyms.kollek.components
 
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.foundation.Image
+import androidx.compose.foundation.background
+import androidx.compose.foundation.border
 import androidx.compose.foundation.gestures.detectTapGestures
 import androidx.compose.foundation.layout.*
+import androidx.compose.foundation.lazy.LazyColumn
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
+import androidx.compose.foundation.lazy.items
 import androidx.compose.material.icons.Icons
 import androidx.compose.material.icons.filled.ArrowForward
 import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.ExperimentalComposeUiApi
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.input.pointer.pointerInput
 import androidx.compose.ui.layout.ContentScale
 import androidx.compose.ui.platform.LocalFocusManager
 import androidx.compose.ui.res.painterResource
 import androidx.compose.ui.res.stringResource
+import androidx.compose.ui.text.TextStyle
+import androidx.compose.ui.text.font.FontStyle
+import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextAlign
-import androidx.compose.ui.unit.dp
+import androidx.compose.ui.tooling.preview.Preview
+import androidx.compose.ui.unit.*
 import androidx.navigation.NavHostController
 import com.gyms.kollek.R
+import com.gyms.kollek.ui.theme.Typography
 import com.gyms.kollek.viewmodel.CityViewModel
 import com.gyms.kollek.viewmodel.WeatherViewModel
 import com.gyms.kollek.viewmodel.WeatherViewModelState
@@ -29,6 +40,7 @@ import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel
 
+@OptIn(ExperimentalUnitApi::class)
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
 @Composable
@@ -44,143 +56,109 @@ fun WeatherSearchScreen(
         mutableStateOf(WeatherViewModelState())
 
     }
-    Scaffold(
-        topBar = {
-            TopAppBar(title = { Text("") }, actions = {
-                WeatherSearchBar(
-                    searchText = text,
-                    placeholderText = stringResource(id = R.string.search_placeholder),
-                    onSearchTextChanged = { it ->
-                        text = it
-                        job?.cancel()
-                        job = CoroutineScope(Dispatchers.IO).launch {
-                            weatherViewModel.cityChanged(text).collect {
-                                state = it
-                            }
-                        }
-                    },
-                    onLocateSearching = {
-                        locationSearching = it
-                    },
-                    onLocateChange = {
-                        CoroutineScope(Dispatchers.IO).launch {
-                            weatherViewModel.locationChanged(it).collect {
-                                state = it
-                            }
-                        }
-                    },
-                    onClearClick = {
-                        text = ""
-                        state = WeatherViewModelState()
-                    }
-                )
-            })
+    Scaffold() {
+        LazyColumn(
+            modifier = Modifier
+                .fillMaxSize()
+                .background(color = Color.Blue),
+            verticalArrangement = Arrangement.Center,
+            horizontalAlignment = Alignment.CenterHorizontally
+
+        ) {
+
+            item {
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp)
+                        .background(color = Color.Yellow)
+                        .border(width = 3.dp, color = Color.Black)
+                ) {
+                    Text("Alfred Sisley")
+                    Text("3 minutes ago")
+                }
+                Column(
+                    modifier = Modifier
+                        .fillMaxSize()
+                        .padding(20.dp)
+                        .background(color = Color.Red)
+                        .border(width = 3.dp, color = Color.Black)
+                ) {
+                    Text("TOMMTMMETMMT")
+                    Text("12345678912347")
+                }
+            }
         }
+    }
+    Scaffold(
     ) {
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .pointerInput(Unit) {
-                    detectTapGestures(onTap = {
-                        focusManager.clearFocus()
-                    })
-                }
+                .background(color = Color.Blue)
         ) {
-            if (state.isLoading || locationSearching) {
-                Column(
-                    horizontalAlignment = Alignment.CenterHorizontally,
+            Column(
+                modifier = Modifier
+                    .fillMaxWidth()
+                    .fillMaxHeight()
+                    .padding(20.dp),
+                verticalArrangement = Arrangement.Center,
+                horizontalAlignment = Alignment.CenterHorizontally
+            ) {
+                Text(
+                    text = stringResource(id = R.string.entry_label),
+                    textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
-                        .padding(30.dp)
-                ) {
-                    CircularProgressIndicator()
-                    Text(
-                        text = stringResource(
-                            id =  if (state.isLoading) {
-                                R.string.search_processing_label
-                            } else {
-                                R.string.localisation_processing_label
-                            }
-                        )
-                    )
-                }
-        }  else if (state.city != null && state.first != null) {
-                val city = state.city!!
-                val item = state.first!!
-                WeatherMap(
-                    modifier = Modifier
-                        .fillMaxSize()
-                        .padding(10.dp)
-                        .weight(1f),
-                    viewModel = CityViewModel(city = city)
+                        .padding(30.dp),
+                    style = Typography.h1,
+                    fontStyle = FontStyle.Italic,
                 )
-                WeatherDetailsItem(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(20.dp)
-                        .weight(2f),
-                    city = city,
-                    item = item
-                )
-                Column(
-                    modifier = Modifier
-                        .fillMaxWidth()
-                        .padding(10.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.End
-                ) {
-
-                    Button(onClick = {
-                        navHostController.navigate(route = "${Screen.WeatherList.route}/${city.name}")
-                    }) {
-                        Icon(
-                            imageVector = Icons.Filled.ArrowForward,
-                            contentDescription = stringResource(id = R.string.icn_go_to_details)
-                        )
-                    }
-                }
-            } else {
-                Column(
+                LazyColumn(
                     modifier = Modifier
                         .fillMaxWidth()
                         .fillMaxHeight()
-                        .padding(20.dp),
-                    verticalArrangement = Arrangement.Center,
-                    horizontalAlignment = Alignment.CenterHorizontally
+                        .padding(3.dp)
+                        .background(color = Color.Red)
+                        .border(width = 4.dp, color = Color.Black),
                 ) {
-                    Image(
-                        painter = painterResource(
-                            id = R.drawable.ic_weather_question
-                        ),
-                        contentDescription = null,
-                        contentScale = ContentScale.Crop,
-                        modifier = Modifier
-                            .width(100.dp)
-                            .height(100.dp)
-                    )
-                    Text(
-                        text = stringResource(id = R.string.entry_label),
-                        textAlign = TextAlign.Center,
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(30.dp),
-                        style = MaterialTheme.typography.h5,
-                    )
+                    item {
+                        Column() {
 
-                    FavsList(
-                        modifier = Modifier
-                            .fillMaxWidth()
-                            .padding(30.dp),
-                        selectionChange = {
-                            text = it
-                            CoroutineScope(Dispatchers.IO).launch {
-                                weatherViewModel.cityChanged(text).collect {
-                                    state = it
-                                }
-                            }
+                            Text(
+                                text = stringResource(id = R.string.app_name),
+                                textAlign = TextAlign.Center,
+                                modifier = Modifier
+                                    .fillMaxWidth()
+                                    .padding(30.dp),
+                                style = Typography.h4,
+                            )
                         }
-                    )
-
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(20.dp)
+                                .background(color = Color.Blue)
+                                .border(width = 4.dp, color = Color.Black),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text("World")
+                        }
+                        Column(
+                            modifier = Modifier
+                                .fillMaxWidth()
+                                .fillMaxHeight()
+                                .padding(20.dp)
+                                .background(color = Color.Yellow)
+                                .border(width = 4.dp, color = Color.Black),
+                            verticalArrangement = Arrangement.Center,
+                            horizontalAlignment = Alignment.CenterHorizontally
+                        ) {
+                            Text("Hello")
+                        }
+                    }
                 }
             }
         }

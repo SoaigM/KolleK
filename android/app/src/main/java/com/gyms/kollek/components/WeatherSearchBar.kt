@@ -21,7 +21,6 @@ import androidx.compose.ui.platform.LocalSoftwareKeyboardController
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.input.ImeAction
 import com.gyms.kollek.R
-import com.gyms.kollek.components.LocationPermissionIcon
 
 @OptIn(ExperimentalComposeUiApi::class)
 @Composable
