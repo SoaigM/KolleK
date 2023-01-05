@@ -39,8 +39,11 @@ def error_wrong_credentials():
 def check_login(username, password):
     return find(lambda x: x.username == username and x.password == password, users) is not None
 
+def get_all_users():
+    return users
+
 def get_user_by_id(user_id):
-    return find(lambda x: x['id'] == user_id, users)
+    return find(lambda x: x['id'] == user_id, get_all_users())
 
 def get_all_categories():
     return categories
@@ -49,10 +52,10 @@ def get_all_minerals():
     return minerals
 
 def get_mineral_by_id(mineral_id):
-    return find(lambda x: x['id'] == mineral_id, minerals)
+    return find(lambda x: x['id'] == mineral_id, get_all_minerals())
 
 def get_minerals_by_category_id(category_id):
-    return find_all(lambda x: x['category'] == category_id, minerals)
+    return find_all(lambda x: x['category'] == category_id, get_all_minerals())
 
 
 @app.route('/login', methods=['GET', 'POST'])
