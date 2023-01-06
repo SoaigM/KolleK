@@ -1,10 +1,10 @@
-package com.gyms.kollek.components
+package com.gyms.kollek.components_old
 
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.platform.LocalContext
 import com.gyms.kollek.R
-import com.gyms.kollek.viewmodel.CityViewModel
+import com.gyms.kollek.viewmodel_old.CityViewModel
 import com.google.android.gms.maps.model.CameraPosition
 import com.google.android.gms.maps.model.LatLng
 import com.google.maps.android.compose.GoogleMap

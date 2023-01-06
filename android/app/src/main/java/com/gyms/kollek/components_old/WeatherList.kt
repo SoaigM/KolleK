@@ -1,4 +1,4 @@
-package com.gyms.kollek.components
+package com.gyms.kollek.components_old
 
 import androidx.compose.foundation.layout.fillMaxHeight
 import androidx.compose.foundation.layout.fillMaxWidth

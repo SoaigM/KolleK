@@ -1,4 +1,4 @@
-package com.gyms.kollek.components
+package com.gyms.kollek.components_old
 
 import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.*
@@ -19,8 +19,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import com.gyms.kollek.R
-import com.gyms.kollek.viewmodel.FavViewModel
-import com.gyms.kollek.viewmodel.FavViewModelState
+import com.gyms.kollek.viewmodel_old.FavViewModel
+import com.gyms.kollek.viewmodel_old.FavViewModelState
 import org.koin.androidx.compose.getViewModel
 
 @Composable

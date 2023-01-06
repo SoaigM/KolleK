@@ -1,4 +1,4 @@
-package com.gyms.kollek.components
+package com.gyms.kollek.components_old
 
 import android.Manifest
 import android.location.Location
@@ -13,7 +13,8 @@ import androidx.compose.runtime.rememberCoroutineScope
 import androidx.compose.ui.platform.LocalContext
 import androidx.compose.ui.res.stringResource
 import com.gyms.kollek.R
-import com.gyms.kollek.viewmodel.LocationViewModel
+import com.gyms.kollek.viewmodel.LoginViewModel
+import com.gyms.kollek.viewmodel_old.LocationViewModel
 import kotlinx.coroutines.cancel
 import kotlinx.coroutines.launch
 import org.koin.androidx.compose.getViewModel

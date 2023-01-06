@@ -16,7 +16,6 @@ import com.airbnb.lottie.compose.LottieCompositionSpec
 import com.airbnb.lottie.compose.animateLottieCompositionAsState
 import com.airbnb.lottie.compose.rememberLottieComposition
 import com.gyms.kollek.R
-import com.gyms.kollek.components.Screen
 
 @OptIn(ExperimentalAnimationApi::class, ExperimentalComposeUiApi::class)
 @Composable
@@ -40,7 +39,7 @@ fun SplashScreen(navHostController: NavHostController) {
     }
 
     if(logoAnimationState.isAtEnd && logoAnimationState.isPlaying) {
-        navHostController.navigate(route = "${Screen.WeatherSearch.route}"){
+        navHostController.navigate(route = "${Screen.KollekLogin.route}"){
         //suppression de la backstack
             popUpTo(Screen.SplashScreen.route){
                 inclusive = true

@@ -1,4 +1,4 @@
-package com.gyms.kollek.components
+package com.gyms.kollek.components_old
 
 import androidx.compose.material.Icon
 import androidx.compose.material.IconButton
@@ -13,8 +13,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
 import com.gyms.kollek.R
 import com.gyms.kollek.domain.WeatherCityDomain
-import com.gyms.kollek.viewmodel.FavViewModel
-import com.gyms.kollek.viewmodel.FavViewModelState
+import com.gyms.kollek.viewmodel_old.FavViewModel
+import com.gyms.kollek.viewmodel_old.FavViewModelState
 import org.koin.androidx.compose.getViewModel
 
 @Composable

@@ -10,11 +10,12 @@ import com.gyms.kollek.repository.UserPreferencesRepositoryInterface
 import com.gyms.kollek.repository.WeatherRepository
 import com.gyms.kollek.repository.WeatherRepositoryInterface
 import com.gyms.kollek.services.OpenWeatherApi
-import com.gyms.kollek.viewmodel.FavViewModel
-import com.gyms.kollek.viewmodel.LocationViewModel
-import com.gyms.kollek.viewmodel.WeatherViewModel
+import com.gyms.kollek.viewmodel_old.FavViewModel
+import com.gyms.kollek.viewmodel.LoginViewModel
+import com.gyms.kollek.viewmodel_old.WeatherViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.gyms.kollek.viewmodel_old.LocationViewModel
 import io.ktor.client.*
 import io.ktor.client.engine.*
 import io.ktor.client.engine.android.*
@@ -33,6 +34,7 @@ val appModule = module {
     single<String>(named("weather_api_key")) { "888f70e84a4d7e44f3c0d4870c926e9d" }
     viewModel { WeatherViewModel(repository = get()) }
     viewModel { FavViewModel(userPreferences = get()) }
+    viewModel{LoginViewModel()}
     single<FusedLocationProviderClient> {
         LocationServices.getFusedLocationProviderClient(requireApplication.applicationContext)
     }

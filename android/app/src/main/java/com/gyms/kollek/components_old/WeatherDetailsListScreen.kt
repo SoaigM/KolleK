@@ -1,4 +1,4 @@
-package com.gyms.kollek.components
+package com.gyms.kollek.components_old
 
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
@@ -17,8 +17,8 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
 import com.gyms.kollek.R
-import com.gyms.kollek.viewmodel.WeatherViewModel
-import com.gyms.kollek.viewmodel.WeatherViewModelState
+import com.gyms.kollek.viewmodel_old.WeatherViewModel
+import com.gyms.kollek.viewmodel_old.WeatherViewModelState
 import org.koin.androidx.compose.getViewModel
 
 @Composable

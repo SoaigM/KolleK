@@ -1,4 +1,4 @@
-package com.gyms.kollek.viewmodel
+package com.gyms.kollek.viewmodel_old
 
 import android.location.Location
 import android.os.Looper

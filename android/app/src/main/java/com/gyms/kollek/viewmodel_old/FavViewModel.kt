@@ -1,4 +1,4 @@
-package com.gyms.kollek.viewmodel
+package com.gyms.kollek.viewmodel_old
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope

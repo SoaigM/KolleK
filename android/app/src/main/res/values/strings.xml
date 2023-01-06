@@ -1,6 +1,15 @@
 <resources>
     <string name="app_name">KolleK</string>
 
+
+    <!-- Login -->
+    <string name="username">username</string>
+    <string name="password">password</string>
+    <string name="error_login">Error username / password</string>
+
+
+
+
     <!-- recherche -->
     <string name="icn_go_to_details">Détails</string>
     <string name="search_placeholder">Saisir une ville.</string>
@@ -30,6 +39,7 @@
     <!-- Favoris -->
     <string name="fav_title_label">Mes recherches habituelles</string>
     <string name="fav_icon_description">Ajouter / Supprimer des favoris</string>
+    <string name="login_buton">login</string>
 
 
 </resources>
