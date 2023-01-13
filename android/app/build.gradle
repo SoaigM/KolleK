@@ -9,12 +9,12 @@ plugins {
 
 android {
     namespace 'com.gyms.kollek'
-    compileSdk 32
+    compileSdk 33
 
     defaultConfig {
         applicationId "com.gyms.kollek"
         minSdk 23
-        targetSdk 32
+        targetSdk 33
         versionCode 1
         versionName "1.0"
 
@@ -50,22 +50,30 @@ android {
         compose true
     }
     composeOptions {
-        kotlinCompilerExtensionVersion "1.2.0"
+        kotlinCompilerExtensionVersion = "1.2.0"
     }
     packagingOptions {
         resources {
             excludes += '/META-INF/{AL2.0,LGPL2.1}'
         }
     }
+
+    buildFeatures {
+        compose = true
+    }
 }
 
 dependencies {
     implementation 'androidx.core:core-ktx:1.7.0'
-    implementation "androidx.compose.ui:ui:$compose_version"
-    implementation "androidx.compose.material:material:$compose_version"
     implementation "androidx.compose.ui:ui-tooling-preview:$compose_version"
     implementation 'androidx.lifecycle:lifecycle-runtime-ktx:2.3.1'
-    implementation 'androidx.activity:activity-compose:1.3.1'
+    implementation "androidx.activity:activity-compose:$compose_version"
+    implementation "androidx.compose.foundation:foundation:1.3.1"
+
+    implementation "androidx.compose.ui:ui:$compose_version"
+    //implementation "androidx.compose.foundation:foundation:$compose_version"
+    implementation "androidx.compose.material:material:$compose_version"
+
 
     // Koin for Android
     implementation "io.insert-koin:koin-core:$koin_version"

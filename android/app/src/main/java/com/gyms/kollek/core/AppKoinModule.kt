@@ -15,6 +15,7 @@ import com.gyms.kollek.viewmodel.LoginViewModel
 import com.gyms.kollek.viewmodel_old.WeatherViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.gyms.kollek.viewmodel.HomeViewModel
 import com.gyms.kollek.viewmodel_old.LocationViewModel
 import io.ktor.client.*
 import io.ktor.client.engine.*
@@ -35,6 +36,7 @@ val appModule = module {
     viewModel { WeatherViewModel(repository = get()) }
     viewModel { FavViewModel(userPreferences = get()) }
     viewModel{LoginViewModel()}
+    viewModel{ HomeViewModel() }
     single<FusedLocationProviderClient> {
         LocationServices.getFusedLocationProviderClient(requireApplication.applicationContext)
     }

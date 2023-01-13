@@ -30,12 +30,11 @@ fun KollekLoginScrean(errorMessage : Boolean, onLoginClicked: (String) -> Unit) 
     var username by remember { mutableStateOf("") }
     var password by remember { mutableStateOf("") }
 
-    Scaffold(
-    ) {
+    Scaffold(){
         Column(
             modifier = Modifier
                 .fillMaxSize()
-                .background(color = Color.Blue)
+                .background(color = MaterialTheme.colors.background)
         ) {
             Column(
                 modifier = Modifier
@@ -46,7 +45,7 @@ fun KollekLoginScrean(errorMessage : Boolean, onLoginClicked: (String) -> Unit) 
                 horizontalAlignment = Alignment.CenterHorizontally
             ) {
                 Text(
-                    text = stringResource(id = R.string.entry_label),
+                    text = stringResource(id = R.string.app_name),
                     textAlign = TextAlign.Center,
                     modifier = Modifier
                         .fillMaxWidth()
