@@ -1,3 +1,6 @@
+import sqlite3
+from sqlite3 import Error
+
 from flask import Flask
 from flask import request
 from flask import redirect
@@ -5,11 +8,11 @@ from flask import url_for
 from flask import session
 from flask import jsonify
 
-
-app = Flask(__name__)
-
 # Set the secret key to some random bytes. Keep this really secret!
+app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+database = r"kollek.db"
 
 # Cached database
 users = [{ "id": 1, "username": "admin", "password": "123" }]
@@ -42,30 +45,57 @@ def error_wrong_credentials():
 
 
 # Find in cached database
-find = lambda fun, lst: next((x for x in lst if fun(x)), None)
-find_all = lambda fun, lst: [x for x in lst if fun(x)]
-
 def check_login(username, password):
-    return find(lambda x: x.get('username') == username and x.get('password') == password, select_all_users()) is not None
+    for user in select_all_users():
+        if user.get('username') == username and user.get('password'):
+            return True
+    return False
 
 def find_user_by_id(user_id):
-    return find(lambda x: x.get('id') == user_id, select_all_users())
+    for user in select_all_users():
+        if user.get('id') == user_id:
+            return user
+    return None
 
 def find_mineral_by_id(mineral_id):
-    return find(lambda x: x.get('id') == mineral_id, select_all_minerals())
+    for mineral in select_all_minerals():
+        if mineral.get('id') == mineral_id:
+            return mineral
+    return None
 
 def find_all_minerals_by_category_id(category_id):
-    return find_all(lambda x: x.get('category') == category_id, select_all_minerals())
+    ret = []
+    for mineral in select_all_minerals():
+        if mineral.get('category') == category_id:
+            ret.append(mineral)
+    return ret
 
 def find_category_by_id(category_id):
-    return find(lambda x: x.get('id') == category_id, select_all_categories())
+    for category in select_all_categories():
+        if category.get('id') == category_id:
+            return category
+    return None
 
 
 # Commande BDD
 def select_all_users():
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM Users")
+    sql_users = cur.fetchall()
+    users = []
+    for uid, name, password in sql_users:
+        users.append({'id': uid, 'username': name, 'password': password})
     return users
 
 def select_all_categories():
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM Categories")
+    sql_categories = cur.fetchall()
+    categories = []
+    for uid, name, color in sql_categories:
+        categories.append({'id': uid, 'name': name, 'color': color})
     return categories
 
 def insert_category(category):
@@ -81,6 +111,13 @@ def remove_category(category):
     categories.remove(category)
 
 def select_all_minerals():
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM Minerals")
+    sql_minerals = cur.fetchall()
+    minerals = []
+    for uid, name, country, image, category in sql_minerals:
+        minerals.append({'id': uid, 'name': name, 'country': country, 'image': image, 'category': category})
     return minerals
 
 def insert_mineral(mineral):
