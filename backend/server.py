@@ -91,7 +91,7 @@ def select_all_users():
 def select_all_categories():
     conn = sqlite3.connect(database)
     cur = conn.cursor()
-    cur.execute("SELECT * FROM Categories")
+    cur.execute('SELECT * FROM Categories')
     sql_categories = cur.fetchall()
     categories = []
     for uid, name, color in sql_categories:
@@ -99,16 +99,30 @@ def select_all_categories():
     return categories
 
 def insert_category(category):
+    conn = sqlite3.connect(database)
+    sql = 'INSERT INTO Categories(CategoryId,Name,Color) VALUES(?,?,?)'
+    cur = conn.cursor()
+    cur.execute(sql, (category['id'], category['name'], category['color']))
+    conn.commit()
     categories.append(category)
 
 def update_category(category):
-    pass
+    conn = sqlite3.connect(database)
+    sql = 'UPDATE Categories SET Name = ? , Color = ? WHERE CategoryId = ?'
+    cur = conn.cursor()
+    cur.execute(sql, (category['name'], category['color'], category['id']))
+    conn.commit()
 
 def remove_category(category):
     list_minerals = find_all_minerals_by_category_id(category.get('id'))
     for m in list_minerals:
         remove_mineral(m)
-    categories.remove(category)
+
+    conn = sqlite3.connect(database)
+    sql = 'DELETE FROM Categories WHERE CategoryId=?'
+    cur = conn.cursor()
+    cur.execute(sql, category['id'])
+    conn.commit()
 
 def select_all_minerals():
     conn = sqlite3.connect(database)
@@ -121,13 +135,26 @@ def select_all_minerals():
     return minerals
 
 def insert_mineral(mineral):
+    conn = sqlite3.connect(database)
+    sql = 'INSERT INTO Minerals(MineralId,Name,Country,Image,CategoryId) VALUES(?,?,?,?,?)'
+    cur = conn.cursor()
+    cur.execute(sql, (mineral['id'], mineral['name'], mineral.get('country'), mineral.get('image'), mineral['category']))
+    conn.commit()
     minerals.append(mineral)
 
 def update_mineral(mineral):
-    pass
+    conn = sqlite3.connect(database)
+    sql = 'UPDATE Minerals SET Name = ? , Country = ? , Image = ? , CategoryId = ? WHERE MineralId = ?'
+    cur = conn.cursor()
+    cur.execute(sql, (mineral['name'], mineral.get('country'), mineral.get('image'), mineral['category'], mineral['id']))
+    conn.commit()
 
 def remove_mineral(mineral):
-    minerals.remove(mineral)
+    conn = sqlite3.connect(database)
+    sql = 'DELETE FROM Minerals WHERE MineralId=?'
+    cur = conn.cursor()
+    cur.execute(sql, (mineral['id'],))
+    conn.commit()
 
 # Endpoints
 def post_login(form):
@@ -204,7 +231,6 @@ def get_category():
     return json_message(select_all_categories(), 200)
 
 def put_category(form):
-    print(form)
     name = form.get('name')
     color = form.get('color')
 
@@ -308,7 +334,7 @@ def category_route():
     elif request.method == 'PUT':
         return put_category(request.json)
 
-@app.route('/category/<int:category_id>', methods=['GET', 'POST', 'DELETE'])
+@app.route('/category/<int:category_id>', methods=['GET', 'POST', 'DELETE', 'PUT'])
 def category_id_route(category_id):
     if not is_logged():
         return error_not_logged()
@@ -316,6 +342,10 @@ def category_id_route(category_id):
         return get_category_id(category_id)
     elif request.method == 'POST':
         return post_category_id(category_id, request.json)
+    elif request.method == 'PUT':
+        form = request.json
+        form['category'] = category_id
+        return put_mineral(request.json)
     elif request.method == 'DELETE':
         return delete_category_id(category_id)
 
