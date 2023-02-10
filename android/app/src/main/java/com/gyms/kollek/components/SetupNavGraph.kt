@@ -3,7 +3,6 @@ package com.gyms.kollek.components
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -13,7 +12,6 @@ import com.gyms.kollek.components_old.WeatherDetailsListScreen
 import com.gyms.kollek.viewmodel.LoginViewModel
 import kotlinx.coroutines.Job
 import org.koin.androidx.compose.getViewModel
-import com.gyms.kollek.R
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
@@ -25,7 +23,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.KollekHome.route//startDestination = Screen.SplashScreen.route
+        startDestination = Screen.KollekList.route //startDestination = Screen.SplashScreen.route
     ) {
         composable(
             route = Screen.SplashScreen.route
@@ -40,10 +38,10 @@ fun SetupNavGraph(navHostController: NavHostController) {
             KollekLoginScrean(errorMessage = errorLogin,
                 onLoginClicked = {
                     val log = loginViewModel.login(it)
-                    errorLogin= !log.isLogged!!
-                    if(log.isLogged == true){
+                    errorLogin = !log.isLogged!!
+                    if (log.isLogged == true) {
                         navHostController.navigate(Screen.KollekHome.route)
-                    }else{
+                    } else {
                         navHostController.navigate(Screen.KollekLogin.route)
                     }
                 })
@@ -51,16 +49,23 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.KollekHome.route
         ) {
-            KollekHomeScreen()
+            KollekHomeScreen {
+                when (it) {
+                    0 -> navHostController.navigate(Screen.KollekLogin.route)
+                    1 -> navHostController.navigate(Screen.KollekList.route)
+                    2 -> println("MAP")
+                }
+            }
         }
+
         composable(
-            route = "${Screen.KollekHome.route}/{cityName}",
-            arguments = listOf(navArgument("cityName") { type = NavType.StringType })
+            route = Screen.KollekList.route
         ) {
-            WeatherDetailsListScreen(
-                navHostController = navHostController,
-                cityName = it.arguments?.getString("cityName") ?: ""
-            )
+            KollekListScreen {
+                when (it) {
+                    0 -> navHostController.navigate(Screen.KollekHome.route)
+                }
+            }
         }
     }
 }
@@ -68,5 +73,6 @@ fun SetupNavGraph(navHostController: NavHostController) {
 sealed class Screen(val route: String) {
     object KollekLogin : Screen("KollekLogin")
     object KollekHome : Screen("KollekHome")
+    object KollekList : Screen("KollekList")
     object SplashScreen : Screen("SplashScreen")
 }

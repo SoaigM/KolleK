@@ -1,20 +1,13 @@
 package com.gyms.kollek.components
 
-import android.view.Gravity
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
-import androidx.compose.foundation.layout.Arrangement.Start
-import androidx.compose.foundation.layout.Arrangement.Top
-import androidx.compose.foundation.layout.WindowInsetsSides.Companion.Top
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.material.*
-import androidx.compose.runtime.Composable
+import androidx.compose.runtime.*
 import androidx.compose.ui.Alignment
-import androidx.compose.ui.Alignment.Companion.Top
 import androidx.compose.ui.Modifier
 import androidx.compose.ui.res.stringResource
-import androidx.compose.ui.text.PlaceholderVerticalAlign.Companion.Top
-import androidx.compose.ui.text.style.LineHeightStyle.Alignment.Companion.Top
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
@@ -24,18 +17,27 @@ import com.gyms.kollek.viewmodel.HomeViewModel
 import org.koin.androidx.compose.getViewModel
 
 
+
+
 @Composable
-fun KollekHomeScreen() {
+fun KollekHomeScreen(onButtonClicked: (Int) -> Unit) {
 
     val homeViewModel = getViewModel<HomeViewModel>()
 
-    Column {
-        Button(onClick = {},modifier = Modifier.align(alignment=Alignment.Start)) {
-            Text("Mon bouton")
+    val collection by remember { mutableStateOf(false) }
+
+    Column (modifier=Modifier.background(color=MaterialTheme.colors.background)){
+        Row {
+            Button(
+                onClick = {
+                    onButtonClicked(0)},
+                modifier = Modifier
+                    .align(alignment = Alignment.Top)
+                    .size(40.dp, 35.dp)
+            ) {
+                Text("X")
+            }
         }
-
-
-
 
     Column(
             modifier = Modifier
@@ -62,14 +64,12 @@ fun KollekHomeScreen() {
             horizontalAlignment = Alignment.CenterHorizontally
         ) {
             item {
-
                 Button(
-                    onClick = { println("Collection") },
+                    onClick = {onButtonClicked(1)},
                     modifier = Modifier
                         .size(300.dp, 150.dp)
                         .padding(10.dp)
                 ) {
-
                     Text(
                         text = stringResource(id = R.string.button_collection),
                         fontSize = 20.sp,
@@ -78,7 +78,8 @@ fun KollekHomeScreen() {
                 }
 
                 Button(
-                    onClick = { println("MAP") },
+                    onClick = { println("map")
+                              onButtonClicked(2)},
                     modifier = Modifier
                         .size(300.dp, 150.dp)
                         .padding(10.dp)
@@ -119,7 +120,7 @@ fun KollekHomeScreen() {
                         text = stringResource(id = R.string.value_mineral),
                     )
                     Text(
-                        text = data.valueCollection.toString(),
+                        text = data.valueCollection.toString()+" €",
                         maxLines = 1,
                         fontSize = 30.sp,
                     )
