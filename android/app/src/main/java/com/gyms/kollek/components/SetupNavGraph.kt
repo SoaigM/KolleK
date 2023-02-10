@@ -3,7 +3,6 @@ package com.gyms.kollek.components
 import androidx.compose.animation.ExperimentalAnimationApi
 import androidx.compose.runtime.*
 import androidx.compose.ui.ExperimentalComposeUiApi
-import androidx.compose.ui.res.stringResource
 import androidx.navigation.NavHostController
 import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
@@ -13,7 +12,6 @@ import com.gyms.kollek.components_old.WeatherDetailsListScreen
 import com.gyms.kollek.viewmodel.LoginViewModel
 import kotlinx.coroutines.Job
 import org.koin.androidx.compose.getViewModel
-import com.gyms.kollek.R
 
 @ExperimentalAnimationApi
 @ExperimentalComposeUiApi
@@ -25,7 +23,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.KollekHome.route//startDestination = Screen.SplashScreen.route
+        startDestination = Screen.KollekList.route //startDestination = Screen.SplashScreen.route
     ) {
         composable(
             route = Screen.SplashScreen.route
@@ -40,10 +38,10 @@ fun SetupNavGraph(navHostController: NavHostController) {
             KollekLoginScrean(errorMessage = errorLogin,
                 onLoginClicked = {
                     val log = loginViewModel.login(it)
-                    errorLogin= !log.isLogged!!
-                    if(log.isLogged == true){
+                    errorLogin = !log.isLogged!!
+                    if (log.isLogged == true) {
                         navHostController.navigate(Screen.KollekHome.route)
-                    }else{
+                    } else {
                         navHostController.navigate(Screen.KollekLogin.route)
                     }
                 })
@@ -51,22 +49,30 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.KollekHome.route
         ) {
-            KollekHomeScreen()
+            KollekHomeScreen (navHostController = navHostController)
         }
+
         composable(
-            route = "${Screen.KollekHome.route}/{cityName}",
-            arguments = listOf(navArgument("cityName") { type = NavType.StringType })
+            route = Screen.KollekList.route
         ) {
-            WeatherDetailsListScreen(
-                navHostController = navHostController,
-                cityName = it.arguments?.getString("cityName") ?: ""
-            )
+            KollekListScreen (navHostController = navHostController)
+        }
+
+
+        composable(
+            route = "${Screen.KollekMineralDetail.route}/{mineralID}",
+            arguments = listOf(navArgument("mineralID") { type = NavType.StringType })
+        ) {
+            println(it.arguments?.getString("mineralID"))
+            navHostController.navigate(Screen.KollekLogin.route)
         }
     }
 }
 
 sealed class Screen(val route: String) {
+    object SplashScreen : Screen("SplashScreen")
     object KollekLogin : Screen("KollekLogin")
     object KollekHome : Screen("KollekHome")
-    object SplashScreen : Screen("SplashScreen")
+    object KollekList : Screen("KollekList")
+    object KollekMineralDetail : Screen("KollekMineralDetail")
 }

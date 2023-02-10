@@ -79,6 +79,10 @@ dependencies {
     implementation "io.insert-koin:koin-core:$koin_version"
     implementation "io.insert-koin:koin-android:$koin_version"
     implementation "io.insert-koin:koin-androidx-compose:$koin_version"
+    implementation "androidx.vectordrawable:vectordrawable:1.1.0"
+
+
+
 
     // Koin Test
     testImplementation "io.insert-koin:koin-test:$koin_version"
