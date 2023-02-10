@@ -1,11 +1,10 @@
 <template>
   <div class="login">
     <h1 class="green">Login</h1>
-    <h3>Log in your Kollek database</h3>
     <div class="login-form">
       <input v-model="username" placeholder="username" />
       <input v-model="password" placeholder="password" type="password" />
-      <button class="btn btn-primary" @click="login">
+      <button class="login-btn" @click="login">
         Login
       </button>
     </div>
@@ -51,6 +50,14 @@ h3 {
   font-size: 1.2rem;
 }
 
+.login {
+  display: flex;
+  flex-direction: column;
+  max-width: 500px;
+  margin: auto;
+  width: 100%;
+}
+
 .login-form {
   display: flex;
   flex-direction: column;
@@ -66,15 +73,26 @@ h3 {
   margin: 4px;
 }
 
+.login-btn {
+  color: #fff;
+  background: #2dd290;
+  vertical-align: top;
+  white-space: normal;
+  text-align: center;
+  font-size: 18px;
+  font-weight: 500;
+  padding: 0.8em 1.2em;
+  margin: 16px 4px 4px 4px;
+  border-radius: 4px;
+  border: 0;
+}
+
+.login-btn:hover {
+  background: #3da57c;
+}
+
 .login h1,
 .login h3 {
   text-align: center;
-}
-
-@media (min-width: 1024px) {
-  .login h1,
-  .login h3 {
-    text-align: left;
-  }
 }
 </style>

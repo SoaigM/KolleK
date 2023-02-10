@@ -9,27 +9,39 @@ export default {
       type: String,
       required: true,
     },
-    color: {
+    country: {
+      type: String,
+      required: true,
+    },
+    image: {
       type: String,
       required: true,
     },
   },
+  data() {
+    return { select: false }
+  }
 };
 </script>
 
 <template>
-  <div class="category">
+  <div class="mineral" @click="select=true" :class="{ selected: select }">
     <h1>{{ name }}</h1>
-    <h3>{{ color }}</h3>
+    <h3>{{ country }}</h3>
+    <h3>{{ image }}</h3>
   </div>
 </template>
 
-<style scoped>
-.category:hover {
+<style>
+.mineral:hover {
   background: #2dd290;
 }
 
-.category {
+.selected {
+  background: #2dd290;
+}
+
+.mineral {
   background: #f0f2f5;
   padding-bottom: 24px;
   padding-top: 10px;
@@ -38,15 +50,15 @@ export default {
   box-shadow: 0 2px 4px rgb(0 0 0 / 10%), 0 8px 16px rgb(0 0 0 / 10%);
   box-sizing: border-box;
   margin: 8px 0 0;
-  padding: 10px 0 12px;
+  padding: 20px 0 28px;
 }
 
-.category h1 {
+.mineral h1 {
   font-weight: 500;
-  font-size: 22px;
+  font-size: 24px;
 }
 
-.category h3 {
+.mineral h3 {
   font-size: 10px;
 }
 </style>

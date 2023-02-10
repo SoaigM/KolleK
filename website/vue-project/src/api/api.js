@@ -39,4 +39,20 @@ const apiGetCategories = async () => {
     return await res.json()
 }
 
-export { apiPostLogin, apiGetCategories }
+const apiGetMinerals = async (id) => {
+  const res = await fetch(
+  API + '/category/' + id,
+    {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        "Session": sessionStorage['session']
+      },
+      mode: 'cors',
+      credentials: 'include',
+    }
+  );
+  return await res.json()
+}
+
+export { apiPostLogin, apiGetCategories, apiGetMinerals }
