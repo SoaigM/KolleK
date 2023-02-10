@@ -8,9 +8,18 @@ from flask import url_for
 from flask import session
 from flask import jsonify
 
+from flask_cors import CORS
+
 # Set the secret key to some random bytes. Keep this really secret!
 app = Flask(__name__)
 app.secret_key = b'_5#y2L"F4Q8z\n\xec]/'
+
+cors = CORS(
+    app,
+    headers=['Content-Type'],
+    expose_headers=['Access-Control-Allow-Origin'],
+    supports_credentials=True
+)
 
 database = r"kollek.db"
 
@@ -124,6 +133,17 @@ def remove_category(category):
     cur.execute(sql, category['id'])
     conn.commit()
 
+def select_all_minerals_improved():
+    conn = sqlite3.connect(database)
+    cur = conn.cursor()
+    cur.execute("SELECT * FROM Minerals LEFT JOIN Categories WHERE Minerals.CategoryId = Categories.CategoryId")
+    sql_minerals = cur.fetchall()
+    minerals = []
+    print(sql_minerals)
+    for uid, name, country, image, category, _, catName, catColor in sql_minerals:
+        minerals.append({'id': uid, 'name': name, 'country': country, 'image': image, 'categoryId': category, 'categoryName': catName, 'categoryColor': catColor })
+    return minerals
+
 def select_all_minerals():
     conn = sqlite3.connect(database)
     cur = conn.cursor()
@@ -170,6 +190,9 @@ def get_user_id(user_id):
 
 def get_mineral():
     return json_message(select_all_minerals(), 200)
+
+def get_mineral_improved():
+    return json_message(select_all_minerals_improved(), 200)
 
 def put_mineral(form):
     name = form.get('name')
@@ -309,7 +332,7 @@ def mineral_route():
     if not is_logged():
         return error_not_logged()
     if request.method == 'GET':
-        return get_mineral()
+        return get_mineral_improved()
     elif request.method == 'PUT':
         return put_mineral(request.json)
         
