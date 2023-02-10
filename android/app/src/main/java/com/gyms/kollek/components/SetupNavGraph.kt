@@ -49,30 +49,30 @@ fun SetupNavGraph(navHostController: NavHostController) {
         composable(
             route = Screen.KollekHome.route
         ) {
-            KollekHomeScreen {
-                when (it) {
-                    0 -> navHostController.navigate(Screen.KollekLogin.route)
-                    1 -> navHostController.navigate(Screen.KollekList.route)
-                    2 -> println("MAP")
-                }
-            }
+            KollekHomeScreen (navHostController = navHostController)
         }
 
         composable(
             route = Screen.KollekList.route
         ) {
-            KollekListScreen {
-                when (it) {
-                    0 -> navHostController.navigate(Screen.KollekHome.route)
-                }
-            }
+            KollekListScreen (navHostController = navHostController)
+        }
+
+
+        composable(
+            route = "${Screen.KollekMineralDetail.route}/{mineralID}",
+            arguments = listOf(navArgument("mineralID") { type = NavType.StringType })
+        ) {
+            println(it.arguments?.getString("mineralID"))
+            navHostController.navigate(Screen.KollekLogin.route)
         }
     }
 }
 
 sealed class Screen(val route: String) {
+    object SplashScreen : Screen("SplashScreen")
     object KollekLogin : Screen("KollekLogin")
     object KollekHome : Screen("KollekHome")
     object KollekList : Screen("KollekList")
-    object SplashScreen : Screen("SplashScreen")
+    object KollekMineralDetail : Screen("KollekMineralDetail")
 }

@@ -4,32 +4,25 @@ import androidx.compose.animation.core.Spring
 import androidx.compose.animation.core.animateDpAsState
 import androidx.compose.animation.core.spring
 import androidx.compose.foundation.background
-import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.Row
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
-import androidx.compose.material.icons.Icons
 import androidx.compose.runtime.*
-import androidx.compose.runtime.R
 import androidx.compose.ui.Modifier
-import androidx.compose.ui.graphics.Color
-import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.material.icons.Icons.Filled
-import androidx.compose.material.icons.filled.Add
 import androidx.compose.material.icons.filled.ArrowBack
-import androidx.compose.material.icons.filled.Close
 
 
 import androidx.compose.ui.unit.dp
-import kotlinx.coroutines.CoroutineScope
+import androidx.navigation.NavHostController
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
 
 @Composable
-fun KollekListScreen(onButtonClicked: (Int) -> Unit) {
+fun KollekListScreen(navHostController: NavHostController) {
     val listeDeMots = listOf("mot1", "mot2", "mot3","mot1", "mot2", "mot3","mot1", "mot2", "mot3","mot1", "mot2", "mot3")
 
     Scaffold(
@@ -39,8 +32,7 @@ fun KollekListScreen(onButtonClicked: (Int) -> Unit) {
                     Text(text = "text1")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { println("KollekListScreen")
-                        onButtonClicked(0)}) {
+                    IconButton(onClick = { navHostController.navigate(Screen.KollekHome.route)}) {
                         Icon(
                             imageVector = Filled.ArrowBack,
                             contentDescription = "Back home"
@@ -83,15 +75,19 @@ fun KollekListScreen(onButtonClicked: (Int) -> Unit) {
                 .background(color = MaterialTheme.colors.background)
         ) {
             items(items = listeDeMots) { name ->
-
-                RockColumn(name = name)
+                RockColumn(
+                    mineralDetails = {
+                        navHostController.navigate(route = "${Screen.KollekMineralDetail.route}/${name}")
+                    },
+                    name = name
+                )
             }
         }
     }
 }
 
 @Composable
-fun RockColumn(name: String) {
+fun RockColumn(mineralDetails: (String) -> Unit, name: String) {
     var expanded by remember { mutableStateOf(false) }
     val extraPadding by animateDpAsState(
         if (expanded) 48.dp else 0.dp,
@@ -106,7 +102,7 @@ fun RockColumn(name: String) {
     ) {
         Row(modifier = Modifier.padding(24.dp)) {
             Button(
-                onClick = { println(name) },
+                onClick = { mineralDetails(name) },
                 modifier = Modifier
                     .weight(1f)
                     .padding(bottom = extraPadding.coerceAtLeast(0.dp))
@@ -117,22 +113,6 @@ fun RockColumn(name: String) {
                     style = MaterialTheme.typography.h4.copy(
                         fontWeight = FontWeight.ExtraBold
                     )
-                )
-                if (expanded) {
-                    Text(
-                        text = ("Composem ipsum color sit lazy, " +
-                                "padding theme elit, sed do bouncy. ").repeat(4),
-                    )
-                }
-            }
-            IconButton(onClick = { expanded = !expanded }) {
-                Icon(
-                    imageVector = if (expanded) Filled.Add else Filled.Close,
-                    contentDescription = if (expanded) {
-                        "show_less"
-                    } else {
-                        "show_more"
-                    }
                 )
             }
         }

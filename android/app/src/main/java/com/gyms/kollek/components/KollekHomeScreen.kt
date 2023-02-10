@@ -11,6 +11,7 @@ import androidx.compose.ui.res.stringResource
 import androidx.compose.ui.text.style.TextAlign
 import androidx.compose.ui.unit.dp
 import androidx.compose.ui.unit.sp
+import androidx.navigation.NavHostController
 import com.gyms.kollek.R
 import com.gyms.kollek.ui.theme.Typography
 import com.gyms.kollek.viewmodel.HomeViewModel
@@ -20,7 +21,7 @@ import org.koin.androidx.compose.getViewModel
 
 
 @Composable
-fun KollekHomeScreen(onButtonClicked: (Int) -> Unit) {
+fun KollekHomeScreen(navHostController: NavHostController) {
 
     val homeViewModel = getViewModel<HomeViewModel>()
 
@@ -30,7 +31,9 @@ fun KollekHomeScreen(onButtonClicked: (Int) -> Unit) {
         Row {
             Button(
                 onClick = {
-                    onButtonClicked(0)},
+                    navHostController.navigate(Screen.KollekLogin.route)
+                },
+
                 modifier = Modifier
                     .align(alignment = Alignment.Top)
                     .size(40.dp, 35.dp)
@@ -65,7 +68,7 @@ fun KollekHomeScreen(onButtonClicked: (Int) -> Unit) {
         ) {
             item {
                 Button(
-                    onClick = {onButtonClicked(1)},
+                    onClick = {navHostController.navigate(Screen.KollekList.route)},
                     modifier = Modifier
                         .size(300.dp, 150.dp)
                         .padding(10.dp)
@@ -78,8 +81,7 @@ fun KollekHomeScreen(onButtonClicked: (Int) -> Unit) {
                 }
 
                 Button(
-                    onClick = { println("map")
-                              onButtonClicked(2)},
+                    onClick = { println("map")},
                     modifier = Modifier
                         .size(300.dp, 150.dp)
                         .padding(10.dp)
