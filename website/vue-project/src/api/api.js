@@ -35,7 +35,8 @@ const apiGetCategories = async () => {
         credentials: 'include',
       }
     );
-    return await res.json()
+    const value = await res.json()
+    return value['result']
 }
 
 const apiGetMinerals = async (id) => {
@@ -50,7 +51,8 @@ const apiGetMinerals = async (id) => {
       credentials: 'include',
     }
   );
-  return await res.json()
+  const value = await res.json()
+  return value['result']
 }
 
 export { apiPostLogin, apiGetCategories, apiGetMinerals }
