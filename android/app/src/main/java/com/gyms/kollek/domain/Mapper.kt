@@ -21,3 +21,12 @@ fun KollekMineralDTO.toDomain() = KollekMineral(
     categoryName = this.categoryName,
     categoryColor = this.categoryColor
 )
+
+
+fun KollekMineralDetailDTO.toDomain() = KollekMineralDetail(
+    image = this.image,
+    id=this.id,
+    name=this.name,
+    country = this.country,
+    category = this.category
+)

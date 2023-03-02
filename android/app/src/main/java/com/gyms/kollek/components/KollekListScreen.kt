@@ -14,12 +14,8 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gyms.kollek.utils.Status
-import com.gyms.kollek.viewmodel.MineralDetailViewModelState
+import com.gyms.kollek.viewmodel.MineralListViewModelState
 import com.gyms.kollek.viewmodel.MineralViewModel
-import com.gyms.kollek.viewmodel_old.WeatherViewModel
-import com.gyms.kollek.viewmodel_old.WeatherViewModelState
-import kotlinx.coroutines.flow.collect
 import org.koin.androidx.compose.getViewModel
 
 @Composable
@@ -28,8 +24,8 @@ fun KollekListScreen(navHostController: NavHostController) {
 
     val mineralViewModel = getViewModel<MineralViewModel>()
     val state by remember(mineralViewModel) {
-        mineralViewModel.fetchWithFlow()
-    }.collectAsState(initial = MineralDetailViewModelState())
+        mineralViewModel.fetchMineralList()
+    }.collectAsState(initial = MineralListViewModelState())
 
 
 
@@ -60,8 +56,9 @@ fun KollekListScreen(navHostController: NavHostController) {
             items(items = state.items) { list ->
                 RockColumn(
                     mineralDetails = {
-                        navHostController.navigate(route = "${Screen.KollekMineralDetail.route}/${list.name}")
+                        navHostController.navigate(route = "${Screen.KollekMineralDetail.route}/${it}")
                     },
+                    id = list.id,
                     name = list.name
                 )
             }
@@ -70,7 +67,7 @@ fun KollekListScreen(navHostController: NavHostController) {
 }
 
 @Composable
-fun RockColumn(mineralDetails: (String) -> Unit, name: String) {
+fun RockColumn(mineralDetails: (Int) -> Unit, id: Int, name: String) {
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -78,8 +75,8 @@ fun RockColumn(mineralDetails: (String) -> Unit, name: String) {
         Row {
             Button(
                 onClick = {
-                    println("here $name")
-                    mineralDetails(name) },
+                    println("here $id")
+                    mineralDetails(id) },
                 modifier = Modifier
                     .weight(1f)
             ) {

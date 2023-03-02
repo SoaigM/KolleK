@@ -60,10 +60,10 @@ fun SetupNavGraph(navHostController: NavHostController) {
 
         composable(
             route = "${Screen.KollekMineralDetail.route}/{mineralID}",
-            arguments = listOf(navArgument("mineralID") { type = NavType.StringType })
+            arguments = listOf(navArgument("mineralID") { type = NavType.IntType })
         ) {
-            it.arguments?.getString("mineralID")
-                ?.let { it1 -> KollekMineralDetail(navHostController = navHostController, name= it1) }
+            it.arguments?.getInt("mineralID")
+                ?.let { it1 -> KollekMineralDetail(navHostController = navHostController, id= it1) }
         }
     }
 }

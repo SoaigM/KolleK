@@ -15,14 +15,20 @@ import androidx.compose.ui.unit.dp
 
 
 import androidx.navigation.NavHostController
+import com.gyms.kollek.viewmodel.MineralDetailViewModelState
+import com.gyms.kollek.viewmodel.MineralListViewModelState
 import com.gyms.kollek.viewmodel.MineralViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun KollekMineralDetail(navHostController: NavHostController, name: String) {
+fun KollekMineralDetail(navHostController: NavHostController, id: Int) {
+
+
 
     val mineralViewModel = getViewModel<MineralViewModel>()
-    val mineral = name.let { mineralViewModel.getMineralById(it) }
+    val state by remember(mineralViewModel) {
+        mineralViewModel.fetchMineralDetail(id)
+    }.collectAsState(initial = MineralDetailViewModelState())
 
     Scaffold(
         topBar = {
@@ -69,12 +75,12 @@ fun KollekMineralDetail(navHostController: NavHostController, name: String) {
                                 .fillMaxHeight()
                         ) {
                             Text(
-                                text = mineral.image,
+                                text = state.image,
                                 modifier = Modifier.padding(50.dp)
                             )
                         }
                         Text(
-                            text = mineral.name,
+                            text = state.name,
                             modifier = Modifier.padding(20.dp),
                             style = MaterialTheme.typography.h4,
                             softWrap = false
@@ -82,14 +88,14 @@ fun KollekMineralDetail(navHostController: NavHostController, name: String) {
                     }
 
                     Text(
-                        text = "Category: "+mineral.categoryName,
+                        text = "Category: "+state.category,
                         modifier = Modifier.padding(20.dp),
                         style = MaterialTheme.typography.h5,
                         textAlign = TextAlign.Center,
                         softWrap = false
                     )
                     Text(
-                        text = "Origin: "+mineral.country,
+                        text = "Origin: "+state.country,
                         modifier = Modifier.padding(20.dp),
                         style = MaterialTheme.typography.h5,
                         textAlign = TextAlign.Center,

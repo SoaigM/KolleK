@@ -1,21 +1,28 @@
 package com.gyms.kollek.viewmodel
 
-import android.location.Location
 import androidx.lifecycle.ViewModel
 import com.gyms.kollek.domain.KollekMineral
+import com.gyms.kollek.domain.KollekMineralDetail
 import com.gyms.kollek.domain.KollekResultMinerals
 import com.gyms.kollek.domain.toDomain
 import com.gyms.kollek.services.KollekAPI
 import com.gyms.kollek.utils.Resource
 import com.gyms.kollek.utils.Status
-import com.gyms.kollek.viewmodel_old.WeatherViewModelState
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import org.koin.androidx.compose.inject
 
+
+data class MineralListViewModelState(
+    var items: List<KollekMineral> = emptyList(),
+    var isLoading: Boolean = false,
+)
 
 data class MineralDetailViewModelState(
-    var items: List<KollekMineral> = emptyList(),
+    val category: Int = 0,
+    val country: String = "null",
+    val id: Int = 0,
+    val image: String = "null",
+    val name: String = "null",
     var isLoading: Boolean = false,
 )
 
@@ -28,10 +35,10 @@ class MineralViewModel(private val api: KollekAPI) :  ViewModel()  {
 
 
 
-    fun fetchWithFlow() = flow {
+    fun fetchMineralList() = flow {
         val flow = getMineralList()
         flow.collect {
-            val state = MineralDetailViewModelState(
+            val state = MineralListViewModelState(
                 items = it.data?.items ?: listOf(),
                 isLoading = it.status == Status.LOADING
             )
@@ -46,11 +53,30 @@ class MineralViewModel(private val api: KollekAPI) :  ViewModel()  {
 
         emit(Resource.Loading())
         emit(Resource.Success(api.fetchMinerals().toDomain()))
+    }
+
+    fun fetchMineralDetail(id: Int) = flow {
+        val flow = getMineralDetail(id)
+        flow.collect {
+            val state = MineralDetailViewModelState(
+                category = it.data?.category ?: 0,
+                country = it.data?.country ?: "null",
+                id = it.data?.id ?: 0,
+                image = it.data?.image ?: "null",
+                name = it.data?.name ?: "null",
+                isLoading = it.status == Status.LOADING
+            )
+            emit(
+                state
+            )
+        }
+    }
 
 
-        //var a =MineralDetailViewModelState("123","topaze","France","image","category","category name","category color")
-        //var b = MineralDetailViewModelState("124","test name","test country","test image","test category","test category name","test category color")
-        //return arrayOf(a,b)
+    fun getMineralDetail(id: Int) : Flow<Resource<KollekMineralDetail?>> = flow {
+
+        emit(Resource.Loading())
+        emit(Resource.Success(api.fetchMineralDetail(id).toDomain()))
     }
 
 }

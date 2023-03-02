@@ -16,3 +16,12 @@ data class KollekMineral(
     val categoryName: String,
     val categoryColor: String,
 )
+
+
+data class KollekMineralDetail(
+    val category: Int,
+    val country: String,
+    val id: Int,
+    val image: String,
+    val name: String,
+)

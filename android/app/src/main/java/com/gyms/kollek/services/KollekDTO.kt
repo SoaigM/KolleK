@@ -20,6 +20,15 @@ data class KollekMineralDTO(
     val categoryId: Int,
     val categoryName: String,
     val categoryColor: String,
-) {
+)
 
-}
+
+@Serializable
+data class KollekMineralDetailDTO(
+    val category: Int,
+    val country: String,
+    val id: Int,
+    val image: String,
+    val name: String,
+)
+

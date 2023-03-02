@@ -15,4 +15,11 @@ class KollekAPI(
 
         }
     }.body<KollekResultDto>()
+
+    suspend fun fetchMineralDetail(id: Int) = client.get("$baseUrl/mineral/$id"){
+        print("GRRRRR $baseUrl/mineral/$id")
+        url{
+
+        }
+    }.body<KollekMineralDetailDTO>()
 }
