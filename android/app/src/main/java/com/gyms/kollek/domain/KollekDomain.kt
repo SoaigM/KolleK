@@ -8,11 +8,11 @@ data class KollekResultMinerals(
 )
 
 data class KollekMineral(
-    val id: String,
+    val id: Int,
     val name: String,
     val country: String,
     val image: String,
-    val categoryId: String,
+    val categoryId: Int,
     val categoryName: String,
     val categoryColor: String,
 )

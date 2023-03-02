@@ -6,7 +6,7 @@ import java.time.format.DateTimeFormatter
 
 
 fun KollekResultDto.toDomain() = KollekResultMinerals(
-    items = this.list?.map { it.toDomain() },
+    items = this.result?.map { it.toDomain() },
 )
 
 

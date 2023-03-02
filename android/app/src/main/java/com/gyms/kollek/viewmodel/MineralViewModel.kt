@@ -22,7 +22,7 @@ data class MineralDetailViewModelState(
 class MineralViewModel(private val api: KollekAPI) :  ViewModel()  {
     fun getMineralById(id : String) : KollekMineral {
 
-        return KollekMineral("123","topaze","France","image","category","category name","category color")
+        return KollekMineral(123,"topaze","France","image",3,"category name","category color")
     }
 
 

@@ -1,7 +1,6 @@
 package com.gyms.kollek.services
 
 import androidx.room.Entity
-import androidx.room.PrimaryKey
 import kotlinx.serialization.Serializable
 
 @Entity(tableName = "KollekResult")
@@ -9,16 +8,16 @@ import kotlinx.serialization.Serializable
 
 @Serializable
 data class KollekResultDto(
-    val list: List<KollekMineralDTO>? = listOf()
+    val result: List<KollekMineralDTO>? = listOf()
 )
 
 @Serializable
 data class KollekMineralDTO(
-    val id: String,
+    val id: Int,
     val name: String,
     val country: String,
     val image: String,
-    val categoryId: String,
+    val categoryId: Int,
     val categoryName: String,
     val categoryColor: String,
 ) {

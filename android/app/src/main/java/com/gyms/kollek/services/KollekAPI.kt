@@ -7,7 +7,7 @@ import org.koin.core.component.KoinComponent
 
 class KollekAPI(
     private val client: HttpClient,
-    var baseUrl: String = "http://127.0.0.1:5000/",
+    var baseUrl: String = "http://10.0.2.2:5000",
 ) : KoinComponent {
 
     suspend fun fetchMinerals() = client.get("$baseUrl/mineral"){
