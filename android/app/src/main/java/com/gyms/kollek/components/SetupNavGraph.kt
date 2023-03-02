@@ -8,7 +8,6 @@ import androidx.navigation.NavType
 import androidx.navigation.compose.NavHost
 import androidx.navigation.compose.composable
 import androidx.navigation.navArgument
-import com.gyms.kollek.components_old.WeatherDetailsListScreen
 import com.gyms.kollek.viewmodel.LoginViewModel
 import kotlinx.coroutines.Job
 import org.koin.androidx.compose.getViewModel
@@ -63,8 +62,8 @@ fun SetupNavGraph(navHostController: NavHostController) {
             route = "${Screen.KollekMineralDetail.route}/{mineralID}",
             arguments = listOf(navArgument("mineralID") { type = NavType.StringType })
         ) {
-            println(it.arguments?.getString("mineralID"))
-            navHostController.navigate(Screen.KollekLogin.route)
+            it.arguments?.getString("mineralID")
+                ?.let { it1 -> KollekMineralDetail(navHostController = navHostController, name= it1) }
         }
     }
 }

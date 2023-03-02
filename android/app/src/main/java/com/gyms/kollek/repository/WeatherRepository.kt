@@ -77,9 +77,9 @@ class WeatherRepository(
                 Log.d("WeatherRepository", "WeatherRepository use cache")
             }
 
-            emit(Resource.Success(result.toDomain()))
+           // emit(Resource.Success(result.toDomain()))
         } else {
-            emit(Resource.Success(openWeatherApi.fetchWeather(lat!!, lon!!).toDomain()))
+            //emit(Resource.Success(openWeatherApi.fetchWeather(lat!!, lon!!).toDomain()))
         }
     }
 }

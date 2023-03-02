@@ -1,0 +1,18 @@
+package com.gyms.kollek.services
+
+import io.ktor.client.*
+import io.ktor.client.call.*
+import io.ktor.client.request.*
+import org.koin.core.component.KoinComponent
+
+class KollekAPI(
+    private val client: HttpClient,
+    var baseUrl: String = "http://127.0.0.1:5000/",
+) : KoinComponent {
+
+    suspend fun fetchMinerals() = client.get("$baseUrl/mineral"){
+        url{
+
+        }
+    }.body<KollekResultDto>()
+}

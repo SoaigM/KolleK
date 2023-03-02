@@ -94,18 +94,6 @@ fun KollekLoginScrean(errorMessage : Boolean, onLoginClicked: (String) -> Unit) 
                                 Text(stringResource(id = R.string.login_buton))
                             }
                         }
-                        /*Column(
-                            modifier = Modifier
-                                .fillMaxWidth()
-                                .fillMaxHeight()
-                                .padding(20.dp)
-                                .background(color = Color.Yellow)
-                                .border(width = 4.dp, color = Color.Black),
-                            verticalArrangement = Arrangement.Center,
-                            horizontalAlignment = Alignment.CenterHorizontally
-                        ) {
-                            Text("Hello")
-                        }*/
                     }
                 }
             }
