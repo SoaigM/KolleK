@@ -3,12 +3,12 @@
     <h1>Mineral</h1>
     <div class="editor-form">
       <input v-model="this.mineral.name" placeholder="name" />
-      <input v-model="this.mineral.country" placeholder="color" />
-      <input v-model="this.mineral.image" placeholder="color" />
+      <input v-model="this.mineral.country" placeholder="country" />
+      <input v-model="this.mineral.image" placeholder="image" />
       <div class="editor-btns">
-        <button class="editor-btn" @click="edit">Create</button>
-        <button class="editor-btn" @click="edit">Update</button>
-        <button class="editor-btn" @click="edit">Delete</button>
+        <button class="editor-btn" @click="create">Create</button>
+        <button class="editor-btn" @click="update">Update</button>
+        <button class="editor-btn" @click="delete">Delete</button>
       </div>
     </div>
   </div>
@@ -33,6 +33,7 @@ export default {
 <style scoped>
 .editor-btns {
     display: flex;
+    justify-content: center;
     width: 100%;
 }
 .editor {

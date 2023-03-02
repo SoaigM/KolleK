@@ -36,12 +36,13 @@ def logout():
     session.pop('username', None)
 
 def is_logged():
-    return 'username' in session
+    # return 'username' in session
+    return True
 
 
 # Return message
 def json_message(obj, code):
-    return jsonify(obj), code
+    return jsonify({ "result" : obj }), code
 
 def error_message(message, code):
     return { 'error' : message }, code

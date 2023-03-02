@@ -30,7 +30,6 @@ const apiGetCategories = async () => {
         method: "GET",
         headers: {
           "Content-Type": "application/json",
-          "Session": sessionStorage['session']
         },
         mode: 'cors',
         credentials: 'include',
@@ -46,7 +45,6 @@ const apiGetMinerals = async (id) => {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
-        "Session": sessionStorage['session']
       },
       mode: 'cors',
       credentials: 'include',

@@ -32,6 +32,7 @@ export default {
 <style scoped>
 .editor-btns {
     display: flex;
+    justify-content: center;
     width: 100%;
 }
 .editor {
