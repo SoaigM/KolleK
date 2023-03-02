@@ -42,7 +42,10 @@ def is_logged():
 
 # Return message
 def json_message(obj, code):
-    return jsonify({ "result" : obj }), code
+    if type(obj) is list:
+        return jsonify({ "result" : obj }), code
+    else:
+        return jsonify(obj), code
 
 def error_message(message, code):
     return { 'error' : message }, code
