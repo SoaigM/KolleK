@@ -15,7 +15,9 @@ import com.gyms.kollek.viewmodel.LoginViewModel
 import com.gyms.kollek.viewmodel_old.WeatherViewModel
 import com.google.android.gms.location.FusedLocationProviderClient
 import com.google.android.gms.location.LocationServices
+import com.gyms.kollek.services.KollekAPI
 import com.gyms.kollek.viewmodel.HomeViewModel
+import com.gyms.kollek.viewmodel.MineralViewModel
 import com.gyms.kollek.viewmodel_old.LocationViewModel
 import io.ktor.client.*
 import io.ktor.client.engine.*
@@ -35,12 +37,13 @@ val appModule = module {
     single<String>(named("weather_api_key")) { "888f70e84a4d7e44f3c0d4870c926e9d" }
     viewModel { WeatherViewModel(repository = get()) }
     viewModel { FavViewModel(userPreferences = get()) }
-    viewModel{LoginViewModel()}
-    viewModel{ HomeViewModel() }
+    viewModel { LoginViewModel() }
+    viewModel { MineralViewModel(api = get ()) }
+    viewModel { HomeViewModel() }
     single<FusedLocationProviderClient> {
         LocationServices.getFusedLocationProviderClient(requireApplication.applicationContext)
     }
-    viewModel { LocationViewModel(client =  get()) }
+    viewModel { LocationViewModel(client = get()) }
 }
 val commonModule = module {
     single { Android.create() }
@@ -50,9 +53,9 @@ val commonModule = module {
     val database by lazy { WeatherRoomDb.getDatabase(requireApplication) }
     single<WeatherRepositoryInterface> { WeatherRepository(get(), database.weatherDao()) }
     single { OpenWeatherApi(get(), get(named("weather_api_key"))) }
+    single <KollekAPI> { KollekAPI(get()) }
     single<UserPreferencesRepositoryInterface> { UserPreferencesRepositoryImpl(requireApplication.dataStore) }
 }
-
 
 
 private inline val requireApplication
