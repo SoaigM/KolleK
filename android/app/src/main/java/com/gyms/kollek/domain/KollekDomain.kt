@@ -1,9 +1,6 @@
 package com.gyms.kollek.domain
 
-import com.gyms.kollek.services.KollekMineralDTO
-import java.time.LocalDateTime
-
-data class KollekResultMinerals(
+data class KollekMineralList(
     val items: List<KollekMineral>? = listOf()
 )
 
@@ -24,4 +21,20 @@ data class KollekMineralDetail(
     val id: Int,
     val image: String,
     val name: String,
+)
+
+
+data class KollekCategoryList(
+    val items: List<KollekCategory>? = listOf()
+)
+
+data class KollekCategory(
+    val id: Int,
+    val color: String,
+    val name: String,
+)
+
+
+data class KollekCategoryDetailList(
+    val items: List<KollekMineralDetail>? = listOf()
 )

@@ -7,7 +7,7 @@ import kotlinx.serialization.Serializable
 
 
 @Serializable
-data class KollekResultDto(
+data class KollekMineralListDto(
     val result: List<KollekMineralDTO>? = listOf()
 )
 
@@ -30,5 +30,22 @@ data class KollekMineralDetailDTO(
     val id: Int,
     val image: String,
     val name: String,
+)
+@Serializable
+data class KollekCategoryListDTO(
+    val result: List<KollekCategoryDTO>? = listOf()
+)
+
+@Serializable
+data class KollekCategoryDTO(
+    val id: Int,
+    val color: String,
+    val name: String,
+)
+
+
+@Serializable
+data class KollekCategoryDetailListDto(
+    val result: List<KollekMineralDetailDTO>? = listOf()
 )
 

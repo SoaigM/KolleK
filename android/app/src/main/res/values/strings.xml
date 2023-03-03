@@ -10,8 +10,8 @@
     <!-- Home -->
     <string name="nb_mineral">"Total number of minerals "</string>
     <string name="value_mineral">"Value of the collection "</string>
-    <string name="button_collection">Collection</string>
-    <string name="button_map">Map</string>
+    <string name="button_minerals">Minerals</string>
+    <string name="button_categories">Categories</string>
 
 
 
@@ -19,10 +19,6 @@
 
 
 
-
-
-
-    <!-- OLD -->
 
 
 

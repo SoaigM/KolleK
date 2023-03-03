@@ -68,27 +68,27 @@ fun KollekHomeScreen(navHostController: NavHostController) {
         ) {
             item {
                 Button(
-                    onClick = {navHostController.navigate(Screen.KollekList.route)},
+                    onClick = {navHostController.navigate(Screen.KollekMineralList.route)},
                     modifier = Modifier
                         .size(300.dp, 150.dp)
                         .padding(10.dp)
                 ) {
                     Text(
-                        text = stringResource(id = R.string.button_collection),
+                        text = stringResource(id = R.string.button_minerals),
                         fontSize = 20.sp,
 
                         )
                 }
 
                 Button(
-                    onClick = { println("map")},
+                    onClick = { navHostController.navigate(Screen.KollekCategoryList.route)},
                     modifier = Modifier
                         .size(300.dp, 150.dp)
                         .padding(10.dp)
                 ) {
 
                     Text(
-                        text = stringResource(id = R.string.button_map),
+                        text = stringResource(id = R.string.button_categories),
                         fontSize = 20.sp,
                     )
                 }

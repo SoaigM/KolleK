@@ -1,10 +1,8 @@
 package com.gyms.kollek.components
 
-import android.content.ClipData
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.*
 import androidx.compose.foundation.lazy.LazyColumn
-import androidx.compose.foundation.lazy.items
 import androidx.compose.material.*
 import androidx.compose.runtime.*
 import androidx.compose.ui.Modifier
@@ -16,12 +14,11 @@ import androidx.compose.ui.unit.dp
 
 import androidx.navigation.NavHostController
 import com.gyms.kollek.viewmodel.MineralDetailViewModelState
-import com.gyms.kollek.viewmodel.MineralListViewModelState
 import com.gyms.kollek.viewmodel.MineralViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun KollekMineralDetail(navHostController: NavHostController, id: Int) {
+fun KollekMineralDetailScreen(navHostController: NavHostController, id: Int) {
 
 
 
@@ -37,7 +34,7 @@ fun KollekMineralDetail(navHostController: NavHostController, id: Int) {
                     Text(text = "")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navHostController.navigate(Screen.KollekList.route)}) {
+                    IconButton(onClick = { navHostController.navigate(Screen.KollekMineralList.route)}) {
                         Icon(
                             imageVector = Filled.ArrowBack,
                             contentDescription = "Back home"
@@ -62,30 +59,25 @@ fun KollekMineralDetail(navHostController: NavHostController, id: Int) {
                     .padding(30.dp)
             ) {
                 item {
-                    Row(
+
+                    Column(
                         modifier = Modifier
-                            .background(color = MaterialTheme.colors.primary)
+                            .background(color = MaterialTheme.colors.onPrimary)
                             .fillMaxWidth()
                             .fillMaxHeight()
                     ) {
-                        Column(
-                            modifier = Modifier
-                                .background(color = MaterialTheme.colors.onPrimary)
-                                .fillMaxWidth(0.5f)
-                                .fillMaxHeight()
-                        ) {
-                            Text(
-                                text = state.image,
-                                modifier = Modifier.padding(50.dp)
-                            )
-                        }
+                        Text(
+                            text = state.image,
+                            modifier = Modifier.padding(80.dp)
+                        )
+                    }
                         Text(
                             text = state.name,
                             modifier = Modifier.padding(20.dp),
                             style = MaterialTheme.typography.h4,
                             softWrap = false
                         )
-                    }
+
 
                     Text(
                         text = "Category: "+state.category,

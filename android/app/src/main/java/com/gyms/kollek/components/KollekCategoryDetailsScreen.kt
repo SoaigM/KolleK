@@ -14,18 +14,18 @@ import androidx.compose.ui.Modifier
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.unit.dp
 import androidx.navigation.NavHostController
-import com.gyms.kollek.viewmodel.MineralListViewModelState
+import com.gyms.kollek.viewmodel.CategoryDetailListViewModelState
 import com.gyms.kollek.viewmodel.MineralViewModel
 import org.koin.androidx.compose.getViewModel
 
 @Composable
-fun KollekListScreen(navHostController: NavHostController) {
+fun KollekCategoryDetailsScreen(navHostController: NavHostController, id: Int) {
     //val listeDeMots = listOf("mot1", "mot2", "mot3","mot1", "mot2", "mot3","mot1", "mot2", "mot3","mot1", "mot2", "mot3")
 
     val mineralViewModel = getViewModel<MineralViewModel>()
     val state by remember(mineralViewModel) {
-        mineralViewModel.fetchMineralList()
-    }.collectAsState(initial = MineralListViewModelState())
+        mineralViewModel.fetchCategoryDetail(id)
+    }.collectAsState(initial = CategoryDetailListViewModelState())
 
 
 
@@ -35,10 +35,10 @@ fun KollekListScreen(navHostController: NavHostController) {
         topBar = {
             TopAppBar(
                 title = {
-                    Text(text = "")
+                    Text(text = "Minerals from category")
                 },
                 navigationIcon = {
-                    IconButton(onClick = { navHostController.navigate(Screen.KollekHome.route)}) {
+                    IconButton(onClick = { navHostController.navigate(Screen.KollekCategoryList.route)}) {
                         Icon(
                             imageVector = Filled.ArrowBack,
                             contentDescription = "Back home"
@@ -54,7 +54,7 @@ fun KollekListScreen(navHostController: NavHostController) {
                 .background(color = MaterialTheme.colors.background)
         ) {
             items(items = state.items) { list ->
-                RockColumn(
+                RockColumnCategoryDetail(
                     mineralDetails = {
                         navHostController.navigate(route = "${Screen.KollekMineralDetail.route}/${it}")
                     },
@@ -67,7 +67,7 @@ fun KollekListScreen(navHostController: NavHostController) {
 }
 
 @Composable
-fun RockColumn(mineralDetails: (Int) -> Unit, id: Int, name: String) {
+fun RockColumnCategoryDetail(mineralDetails: (Int) -> Unit, id: Int, name: String) {
     Surface(
         color = MaterialTheme.colors.primary,
         modifier = Modifier.padding(vertical = 4.dp, horizontal = 8.dp)
@@ -80,7 +80,7 @@ fun RockColumn(mineralDetails: (Int) -> Unit, id: Int, name: String) {
                 modifier = Modifier
                     .weight(1f)
             ) {
-                Text(text = "Value, ")
+                Text(text = "name: ")
                 Text(
                     text = name,
                     style = MaterialTheme.typography.h4.copy(

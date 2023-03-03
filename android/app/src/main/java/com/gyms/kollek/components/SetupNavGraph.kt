@@ -22,7 +22,7 @@ fun SetupNavGraph(navHostController: NavHostController) {
 
     NavHost(
         navController = navHostController,
-        startDestination = Screen.KollekList.route //startDestination = Screen.SplashScreen.route
+        startDestination = Screen.SplashScreen.route
     ) {
         composable(
             route = Screen.SplashScreen.route
@@ -52,9 +52,9 @@ fun SetupNavGraph(navHostController: NavHostController) {
         }
 
         composable(
-            route = Screen.KollekList.route
+            route = Screen.KollekMineralList.route
         ) {
-            KollekListScreen (navHostController = navHostController)
+            KollekListMineralScreen (navHostController = navHostController)
         }
 
 
@@ -63,7 +63,23 @@ fun SetupNavGraph(navHostController: NavHostController) {
             arguments = listOf(navArgument("mineralID") { type = NavType.IntType })
         ) {
             it.arguments?.getInt("mineralID")
-                ?.let { it1 -> KollekMineralDetail(navHostController = navHostController, id= it1) }
+                ?.let { it1 -> KollekMineralDetailScreen(navHostController = navHostController, id= it1) }
+        }
+
+
+        composable(
+            route = Screen.KollekCategoryList.route
+        ) {
+            KollekListCategoryScreen (navHostController = navHostController)
+        }
+
+
+        composable(
+            route = "${Screen.KollekCategoryDetail.route}/{categoryID}",
+            arguments = listOf(navArgument("categoryID") { type = NavType.IntType })
+        ) {
+            it.arguments?.getInt("categoryID")
+                ?.let { it1 -> KollekCategoryDetailsScreen(navHostController = navHostController, id= it1) }
         }
     }
 }
@@ -72,6 +88,8 @@ sealed class Screen(val route: String) {
     object SplashScreen : Screen("SplashScreen")
     object KollekLogin : Screen("KollekLogin")
     object KollekHome : Screen("KollekHome")
-    object KollekList : Screen("KollekList")
+    object KollekMineralList : Screen("KollekList")
     object KollekMineralDetail : Screen("KollekMineralDetail")
+    object KollekCategoryList : Screen("KollekCategoryList")
+    object KollekCategoryDetail : Screen("KollekCategoryDetail")
 }
